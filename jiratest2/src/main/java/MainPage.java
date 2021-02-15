@@ -1,3 +1,4 @@
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,6 +9,10 @@ public class MainPage {
     CreateIssueForm createIssueForm;
     @FindBy(id = "create_link")
     WebElement createButton;
+    @FindBy(xpath = "//*[@id=\"header-details-user-fullname\"]/span/span/img")
+    WebElement avatar;
+    @FindBy(id = "view_profile")
+    WebElement viewProfileTab;
 
 
     public MainPage(WebDriver driver) {
@@ -30,5 +35,10 @@ public class MainPage {
     public boolean isIssueCreated(String project, String issue, String summary){
         createIssueForm.navigateToCreatedIssue();
         return createIssueForm.isIssueCreated(project, issue, summary);
+    }
+
+    public void navigateToProfile () {
+        avatar.click();
+        viewProfileTab.click();
     }
 }
