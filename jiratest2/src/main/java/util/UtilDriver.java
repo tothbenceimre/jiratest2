@@ -13,7 +13,7 @@ public class UtilDriver {
 
         public UtilDriver() {
             driver = new ChromeDriver();
-            this.baseUrl = "";
+            this.baseUrl = "https://jira-auto.codecool.metastage.net/secure/Dashboard.jspa";
             driver.get(baseUrl);
             new WebDriverWait(driver, 40).until(
                     webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
