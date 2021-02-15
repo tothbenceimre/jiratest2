@@ -31,4 +31,8 @@ public class MainPage {
         createIssueForm.navigateToCreatedIssue();
         return createIssueForm.isIssueCreated(project, issue, summary);
     }
+
+    public void deleteIssue(){
+        createIssueForm.deleteCreatedIssue();
+    }
 }

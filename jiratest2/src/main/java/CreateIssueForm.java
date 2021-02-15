@@ -1,6 +1,4 @@
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,12 +8,8 @@ public class CreateIssueForm {
     WebDriver driver;
     @FindBy(id = "project-field")
     WebElement projectField;
-    @FindBy(id = "issuetype-single-select")
-    WebElement issueTypeField;
     @FindBy(xpath = "//*[@id='issuetype-single-select']/input")
     WebElement issueTypeInput;
-//    @FindBy(xpath = "//input[@id='issuetype']")
-//    WebElement issueTypeInput;
     @FindBy(id = "summary")
     WebElement summaryField;
     @FindBy(id = "create-issue-submit")
@@ -30,6 +24,13 @@ public class CreateIssueForm {
     WebElement projectNameVal;
     @FindBy(id = "summary-val")
     WebElement summaryVal;
+    @FindBy(id = "opsbar-operations_more")
+    WebElement moreButton;
+    @FindBy(id = "delete-issue")
+    WebElement deleteButton;
+    @FindBy(id = "delete-issue-submit")
+    WebElement deleteConfirm;
+
 
     public CreateIssueForm(WebDriver driver) {
         this.driver = driver;
@@ -37,21 +38,40 @@ public class CreateIssueForm {
     }
     public void fillProjectField(String projectName){
         new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(projectField));
-        projectField.clear();
+        projectField.click();
+        projectField.sendKeys(Keys.CONTROL +"a");
+        projectField.sendKeys(Keys.DELETE);
         projectField.sendKeys(projectName);
-        projectField.sendKeys(Keys.ENTER);
+        projectField.sendKeys(Keys.TAB);
     }
 
     public void fillIssueType(String issue){
-        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(issueTypeField));
-        issueTypeField.click();
-        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(issueTypeInput));
+        waitForStale(issueTypeInput);
+        issueTypeInput.sendKeys(Keys.CONTROL +"a");
+        issueTypeInput.sendKeys(Keys.DELETE);
         issueTypeInput.sendKeys(issue);
+        issueTypeInput.sendKeys(Keys.TAB);
+    }
+
+    public void waitForStale(WebElement element){
+        try {
+            element.click();
+        } catch (StaleElementReferenceException e){
+            new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(element));
+        }
+    }
+
+    public void waitForStaleSummary(WebElement element){
+        try {
+            new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(element));
+            summaryField.click();
+        } catch (StaleElementReferenceException e){
+            new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(element));
+        }
     }
 
     public void fillSummary(String summary){
-        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(summaryField));
-        summaryField.click();
+        waitForStaleSummary(summaryField);
         summaryField.sendKeys(summary);
     }
 
@@ -73,17 +93,26 @@ public class CreateIssueForm {
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(issueCreatedLink));
         issueCreatedLink.click();
     }
+
     public boolean isIssueCreated(String projectName, String issueType, String summary){
-        if (!projectNameVal.getText().equals(projectName)){
+        if (!projectName.contains(projectNameVal.getText())){
             return false;
         }
-        if (!issueTypeVal.getText().equals(issueType)){
+        if (!issueTypeVal.getText().contains(issueType)){
             return false;
         }
         if (!summaryVal.getText().equals(summary)){
             return false;
         }
         return true;
+    }
 
+    public void deleteCreatedIssue(){
+        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(moreButton));
+        moreButton.click();
+        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(deleteButton));
+        deleteButton.click();
+        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(deleteConfirm));
+        deleteConfirm.click();
     }
 }

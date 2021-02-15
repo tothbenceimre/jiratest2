@@ -38,6 +38,7 @@ class CreateIssueFormTest {
     public void fillCreateIssueForm(String project, String issue, String summary, boolean isCreate){
         mainPage.fillCreateIssueForm(project, issue, summary, isCreate);
         boolean isCreatedCorrectly = mainPage.isIssueCreated(project, issue, summary);
+        mainPage.deleteIssue();
         Assertions.assertTrue(isCreatedCorrectly);
     }
 }
