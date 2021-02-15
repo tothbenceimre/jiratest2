@@ -9,6 +9,7 @@ public class MainPage {
     @FindBy(id = "create_link")
     WebElement createButton;
 
+
     public MainPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(this.driver, this);
