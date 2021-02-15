@@ -1,10 +1,10 @@
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import pages.DashboardPage;
 import org.junit.jupiter.params.ParameterizedTest;
 import pages.LoginPage;
+import pages.MainPage;
 import pages.ProfilePage;
 import util.UtilDriver;
 import static org.junit.jupiter.api.Assertions.assertTrue;

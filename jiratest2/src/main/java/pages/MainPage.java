@@ -1,4 +1,5 @@
-import org.openqa.selenium.By;
+package pages;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,6 +26,7 @@ public class MainPage {
     }
 
     public void clickCreateButton(){
+        new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(createButton));
         createButton.click();
     }
 
@@ -41,6 +43,10 @@ public class MainPage {
         return createIssueForm.isIssueCreated(project, issue, summary);
     }
 
+    public void deleteIssue(){
+        createIssueForm.deleteCreatedIssue();
+    }
+
     public void navigateToProfile () {
         avatar.click();
         viewProfileTab.click();
@@ -53,7 +59,4 @@ public class MainPage {
         logoutTab.click();
     }
 
-    public void deleteIssue(){
-        createIssueForm.deleteCreatedIssue();
-    }
 }

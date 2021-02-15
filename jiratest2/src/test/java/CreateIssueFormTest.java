@@ -5,27 +5,23 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import pages.DashboardPage;
+import pages.LoginPage;
+import pages.MainPage;
 import util.UtilDriver;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CreateIssueFormTest {
     UtilDriver utilDriver;
+    DashboardPage dashboardPage;
     MainPage mainPage;
 
     @BeforeEach
     public void setUp(){
         utilDriver = new UtilDriver();
-        login(utilDriver.getDriver());
+        dashboardPage = new DashboardPage(utilDriver.getDriver());
+        dashboardPage.login(System.getenv("jirausername"), System.getenv("jirapassword"));
         mainPage = new MainPage(utilDriver.getDriver());
         mainPage.clickCreateButton();
-    }
-
-    public void login(WebDriver driver){
-        driver.get("https://jira-auto.codecool.metastage.net/login.jsp");
-        driver.findElement(By.id("login-form-username")).sendKeys(System.getenv("jirausername"));
-        driver.findElement(By.id("login-form-password")).sendKeys(System.getenv("jirapassword"));
-        driver.findElement(By.id("login-form-submit")).click();
     }
 
     @AfterEach
