@@ -23,7 +23,7 @@ public class DashboardPage {
     WebElement loginPageButton;
 
     @FindBy(xpath = "//div/p[contains(text(),'Sorry, your username and password are incorrect - please try again.')]")
-    private WebElement loginError;
+    WebElement loginError;
 
     public DashboardPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -48,6 +48,10 @@ public class DashboardPage {
         WebDriverWait wait = new WebDriverWait(driver, 3);
         wait.until(ExpectedConditions.visibilityOf(loginError));
         return loginError.isDisplayed() && loginPageButton.isDisplayed();
+    }
+
+    public void navigateToLoginPage () {
+        loginPageButton.click();
     }
 
 }
