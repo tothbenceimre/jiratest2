@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,7 +19,10 @@ public class MainPage {
     WebElement viewProfileTab;
     @FindBy(id = "log_out")
     WebElement logoutTab;
-
+    @FindBy(id = "browse_link")
+    WebElement browseButton;
+    @FindBy(id = "project_view_all_link_lnk")
+    WebElement viewAllProjectsTab;
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
@@ -67,4 +71,10 @@ public class MainPage {
         logoutTab.click();
     }
 
+    public void clickOnViewAllProjects () {
+        WebDriverWait wait = new WebDriverWait(driver, 3);
+        wait.until(ExpectedConditions.visibilityOf(browseButton));
+        browseButton.click();
+        viewAllProjectsTab.click();
+    }
 }
