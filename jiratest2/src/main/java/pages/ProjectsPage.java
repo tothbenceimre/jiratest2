@@ -4,6 +4,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.concurrent.TimeUnit;
+
 public class ProjectsPage {
     WebDriver driver;
     @FindBy(xpath = "//*[text()=\"You can't view this project\"]")
@@ -16,6 +18,16 @@ public class ProjectsPage {
 
     public WebElement findProjectsKey (String project) {
         return driver.findElement(By.xpath("//*[text()='" + project + "']"));
+    }
+
+    public WebElement findSummaryPage (String project) {
+        driver.manage().timeouts().implicitlyWait(20000, TimeUnit.MILLISECONDS);
+        return driver.findElement(By.xpath("//*[@alt='" + project + "']"));
+
+    }
+
+    public void clickOnSummaryPage (String project) {
+        findSummaryPage(project).click();
     }
 
     public boolean verifyProjectIsAvailable (String project) {
