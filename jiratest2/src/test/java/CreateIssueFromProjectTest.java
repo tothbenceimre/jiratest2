@@ -3,15 +3,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import pages.CreateIssueForm;
 import pages.CreateIssueFromProject;
 import pages.DashboardPage;
 import pages.MainPage;
 import util.UtilDriver;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CreateIssueFromProjectTest {
     UtilDriver utilDriver;

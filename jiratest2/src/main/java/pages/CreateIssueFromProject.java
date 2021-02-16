@@ -54,10 +54,6 @@ public class CreateIssueFromProject {
         }
     }
 
-    public boolean isValidSummary(String sum){
-        return sum != null;
-    }
-
     public boolean isValidIssue(String issue){
         try {
             driver.findElement(By.xpath(setIssueXpath(issue))).click();
