@@ -40,6 +40,9 @@ public class MainPage {
 
     public boolean isIssueCreatedCorrectly(String project, String issue, String summary){
 //        createIssueForm.navigateToCreatedIssue();
+        if (createIssueForm.isErrorPresent() || createIssueForm.isNoMatch){
+            return false;
+        }
         createIssueForm.navigateToLastCreatedIssue();
         return createIssueForm.isIssueCreated(project, issue, summary);
     }

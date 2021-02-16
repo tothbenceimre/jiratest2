@@ -8,35 +8,22 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CreateIssueForm {
     WebDriver driver;
-    @FindBy(id = "project-field")
-    WebElement projectField;
-    @FindBy(xpath = "//*[@id='issuetype-single-select']/input")
-    WebElement issueTypeInput;
-    @FindBy(id = "summary")
-    WebElement summaryField;
-    @FindBy(id = "create-issue-submit")
-    WebElement createButton;
-    @FindBy(xpath = "//*[@id='aui-flag-container']//a")
-    WebElement issueCreatedLink;
-    @FindBy(xpath = "//*[@id='create-issue-submit']/following-sibling::button")
-    WebElement cancelButton;
-    @FindBy(id = "type-val")
-    WebElement issueTypeVal;
-    @FindBy(id = "project-name-val")
-    WebElement projectNameVal;
-    @FindBy(id = "summary-val")
-    WebElement summaryVal;
-    @FindBy(id = "opsbar-operations_more")
-    WebElement moreButton;
-    @FindBy(id = "delete-issue")
-    WebElement deleteButton;
-    @FindBy(id = "delete-issue-submit")
-    WebElement deleteConfirm;
-    @FindBy(id = "find_link")
-    WebElement issuesButton;
-    @FindBy(xpath = "//*[@id='issues_history_main']//li[1]")
-    WebElement recentIssue;
-
+    @FindBy(id = "project-field") WebElement projectField;
+    @FindBy(xpath = "//*[@id='issuetype-single-select']/input") WebElement issueTypeInput;
+    @FindBy(id = "summary") WebElement summaryField;
+    @FindBy(id = "create-issue-submit") WebElement createButton;
+    @FindBy(xpath = "//*[@id='aui-flag-container']//a") WebElement issueCreatedLink;
+    @FindBy(xpath = "//*[@id='create-issue-submit']/following-sibling::button") WebElement cancelButton;
+    @FindBy(id = "type-val") WebElement issueTypeVal;
+    @FindBy(id = "project-name-val") WebElement projectNameVal;
+    @FindBy(id = "summary-val") WebElement summaryVal;
+    @FindBy(id = "opsbar-operations_more") WebElement moreButton;
+    @FindBy(id = "delete-issue") WebElement deleteButton;
+    @FindBy(id = "delete-issue-submit") WebElement deleteConfirm;
+    @FindBy(id = "find_link") WebElement issuesButton;
+    @FindBy(xpath = "//*[@id='issues_history_main']//li[1]") WebElement recentIssue;
+    @FindBy(xpath = "//*[@id='summary']/following-sibling::div[@class='error']") WebElement errorSummary;
+    boolean isNoMatch;
 
     public CreateIssueForm(WebDriver driver) {
         this.driver = driver;
@@ -48,6 +35,7 @@ public class CreateIssueForm {
         projectField.sendKeys(Keys.CONTROL +"a");
         projectField.sendKeys(Keys.DELETE);
         projectField.sendKeys(projectName);
+        isNoMatch = isNoMatchPresent();
         projectField.sendKeys(Keys.TAB);
     }
 
@@ -56,6 +44,7 @@ public class CreateIssueForm {
         issueTypeInput.sendKeys(Keys.CONTROL +"a");
         issueTypeInput.sendKeys(Keys.DELETE);
         issueTypeInput.sendKeys(issue);
+        isNoMatch = isNoMatchPresent();
         issueTypeInput.sendKeys(Keys.TAB);
     }
 
@@ -78,7 +67,20 @@ public class CreateIssueForm {
 
     public void fillSummary(String summary){
         waitForStaleSummary(summaryField);
-        summaryField.sendKeys(summary);
+        if (summary != null){
+        summaryField.sendKeys(summary);}
+    }
+
+    public boolean isErrorPresent(){
+        try {
+            return errorSummary.isDisplayed();
+        } catch (NoSuchElementException e){
+            return false;
+        }
+    }
+
+    public boolean isNoMatchPresent(){
+        return driver.getPageSource().contains("No Matches");
     }
 
     public void clickCreate(){
@@ -92,7 +94,10 @@ public class CreateIssueForm {
     public void finishCreate(boolean isCreate) {
         if (isCreate){
             clickCreate();
-        } else {clickCancel();}
+        } else {
+            clickCancel();
+            acceptPopUp();
+        }
     }
 
     public void navigateToLastCreatedIssue(){
@@ -105,8 +110,7 @@ public class CreateIssueForm {
     public void acceptPopUp(){
         try {
             driver.switchTo().alert().accept();
-        } catch (NoAlertPresentException ignored){
-        }
+        } catch (NoAlertPresentException ignored){ }
     }
 
     public void navigateToCreatedIssue(){

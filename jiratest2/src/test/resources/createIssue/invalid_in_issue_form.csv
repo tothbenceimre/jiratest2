@@ -1,0 +1,4 @@
+project, issue, summary, create
+Main Testing Project (MTP), Task,  , true
+Main Testing Project (MTP), Invalid_issue, fill_create_issue_form_for_test, false
+Invalid Project Name, Task, fill_create_issue_form_for_test, false

@@ -42,4 +42,13 @@ class CreateIssueFormTest {
         boolean isCreated = mainPage.isIssueCreatedCorrectly(project, issue, summary);
         Assertions.assertFalse(isCreated);
     }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/createIssue/invalid_in_issue_form.csv", numLinesToSkip = 1)
+    public void invalidDataInIssueForm(String project, String issue, String summary, boolean isCreate){
+        mainPage.fillCreateIssueForm(project, issue, summary, isCreate);
+        boolean isCorrect = mainPage.isIssueCreatedCorrectly(project, issue, summary);
+        Assertions.assertFalse(isCorrect);
+    }
+
 }
