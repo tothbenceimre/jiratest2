@@ -6,8 +6,6 @@ import org.openqa.selenium.support.PageFactory;
 
 public class ProjectsPage {
     WebDriver driver;
-//    @FindBy(xpath = "//*[@id=\"summary-body\"]/div/div[2]/dl/dd[2]")
-//    WebElement username;
 
     public ProjectsPage(WebDriver driver) {
         this.driver = driver;
