@@ -5,6 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import pages.DashboardPage;
 import org.junit.jupiter.params.ParameterizedTest;
 import pages.LogoutPage;
+import pages.MainPage;
 import util.UtilDriver;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
