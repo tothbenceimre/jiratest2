@@ -39,7 +39,7 @@ public class UtilDriver {
         public void navigationToCertainProject (String name)  {
             driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
             WebDriverWait wait = new WebDriverWait(driver, 10000);
-            wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//*[@id=\"header-details-user-fullname\"]/span/span/img"))));
+            wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//*[@id='header-details-user-fullname']/span/span/img"))));
             driver.get("https://jira-auto.codecool.metastage.net/projects/" + name + "/summary");
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         }
