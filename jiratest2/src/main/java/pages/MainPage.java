@@ -38,8 +38,9 @@ public class MainPage {
         createIssueForm.finishCreate(isCreate);
     }
 
-    public boolean isIssueCreated(String project, String issue, String summary){
-        createIssueForm.navigateToCreatedIssue();
+    public boolean isIssueCreatedCorrectly(String project, String issue, String summary){
+//        createIssueForm.navigateToCreatedIssue();
+        createIssueForm.navigateToLastCreatedIssue();
         return createIssueForm.isIssueCreated(project, issue, summary);
     }
 

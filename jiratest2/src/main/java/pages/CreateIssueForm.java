@@ -32,6 +32,10 @@ public class CreateIssueForm {
     WebElement deleteButton;
     @FindBy(id = "delete-issue-submit")
     WebElement deleteConfirm;
+    @FindBy(id = "find_link")
+    WebElement issuesButton;
+    @FindBy(xpath = "//*[@id='issues_history_main']//li[1]")
+    WebElement recentIssue;
 
 
     public CreateIssueForm(WebDriver driver) {
@@ -89,6 +93,20 @@ public class CreateIssueForm {
         if (isCreate){
             clickCreate();
         } else {clickCancel();}
+    }
+
+    public void navigateToLastCreatedIssue(){
+        acceptPopUp();
+        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(issuesButton));
+        issuesButton.click();
+        waitForStale(recentIssue);
+    }
+
+    public void acceptPopUp(){
+        try {
+            driver.switchTo().alert().accept();
+        } catch (NoAlertPresentException ignored){
+        }
     }
 
     public void navigateToCreatedIssue(){

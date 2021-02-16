@@ -3,10 +3,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import pages.DashboardPage;
-import pages.LoginPage;
 import pages.MainPage;
 import util.UtilDriver;
 
@@ -33,8 +30,16 @@ class CreateIssueFormTest {
     @CsvFileSource(resources = "/createIssue/fill_create_issue_form.csv", numLinesToSkip = 1)
     public void fillCreateIssueForm(String project, String issue, String summary, boolean isCreate){
         mainPage.fillCreateIssueForm(project, issue, summary, isCreate);
-        boolean isCreatedCorrectly = mainPage.isIssueCreated(project, issue, summary);
+        boolean isCreatedCorrectly = mainPage.isIssueCreatedCorrectly(project, issue, summary);
         mainPage.deleteIssue();
         Assertions.assertTrue(isCreatedCorrectly);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/createIssue/cancel_in_issue_form.csv", numLinesToSkip = 1)
+    public void cancelInIssueForm(String project, String issue, String summary, boolean isCreate){
+        mainPage.fillCreateIssueForm(project, issue, summary, isCreate);
+        boolean isCreated = mainPage.isIssueCreatedCorrectly(project, issue, summary);
+        Assertions.assertFalse(isCreated);
     }
 }
