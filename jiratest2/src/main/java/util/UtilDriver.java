@@ -1,8 +1,11 @@
 package util;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
@@ -33,9 +36,12 @@ public class UtilDriver {
             driver.close();
         }
 
-    public void navigationToCertainProject (String name)  {
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("https://jira-auto.codecool.metastage.net/projects/" + name + "/summary");
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    }
+        public void navigationToCertainProject (String name)  {
+            driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+            WebDriverWait wait = new WebDriverWait(driver, 10000);
+            wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//*[@id=\"header-details-user-fullname\"]/span/span/img"))));
+            driver.get("https://jira-auto.codecool.metastage.net/projects/" + name + "/summary");
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        }
+
 }
