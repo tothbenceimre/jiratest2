@@ -33,4 +33,9 @@ public class UtilDriver {
             driver.close();
         }
 
+    public void navigationToCertainProject (String name)  {
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.get("https://jira-auto.codecool.metastage.net/projects/" + name + "/summary");
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    }
 }
