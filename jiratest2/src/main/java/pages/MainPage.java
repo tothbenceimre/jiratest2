@@ -77,4 +77,8 @@ public class MainPage {
         browseButton.click();
         viewAllProjectsTab.click();
     }
+
+    public void navigateToIssue(String project, String id) {
+        driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/"+project+"/issues/"+id);
+    }
 }
