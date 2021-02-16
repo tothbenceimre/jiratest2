@@ -29,6 +29,7 @@ public class CreateIssueForm {
         this.driver = driver;
         PageFactory.initElements(this.driver, this);
     }
+
     public void fillProjectField(String projectName){
         new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(projectField));
         projectField.click();
@@ -96,33 +97,29 @@ public class CreateIssueForm {
             clickCreate();
         } else {
             clickCancel();
-            acceptPopUp();
+            acceptAlert();
         }
     }
 
     public void navigateToLastCreatedIssue(){
-        acceptPopUp();
+        acceptAlert();
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(issuesButton));
         issuesButton.click();
         waitForStale(recentIssue);
     }
 
-    public void acceptPopUp(){
+    public void acceptAlert(){
         try {
             driver.switchTo().alert().accept();
         } catch (NoAlertPresentException ignored){ }
     }
 
-    public void navigateToCreatedIssue(){
-        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(issueCreatedLink));
-        issueCreatedLink.click();
-    }
 
     public boolean isIssueCreated(String projectName, String issueType, String summary){
         if (!projectName.contains(projectNameVal.getText())){
             return false;
         }
-        if (!issueTypeVal.getText().contains(issueType)){
+        if (!issueTypeVal.getText().contains(issueType)|| !issueType.contains(issueTypeVal.getText())){
             return false;
         }
         if (!summaryVal.getText().equals(summary)){
@@ -138,5 +135,9 @@ public class CreateIssueForm {
         deleteButton.click();
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(deleteConfirm));
         deleteConfirm.click();
+    }
+
+    public void refresh() {
+        driver.navigate().refresh();
     }
 }

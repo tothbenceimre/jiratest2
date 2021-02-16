@@ -25,6 +25,10 @@ public class MainPage {
         PageFactory.initElements(this.driver, this);
     }
 
+    public void loadpage(){
+        new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(avatar));
+    }
+
     public void clickCreateButton(){
         new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(createButton));
         createButton.click();
