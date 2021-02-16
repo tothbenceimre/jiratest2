@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import pages.CreateIssueForm;
 import pages.CreateIssueFromProject;
@@ -44,4 +45,23 @@ class CreateIssueFromProjectTest {
         page.deleteCreatedIssue();
         Assertions.assertTrue(created);
     }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/createIssue/empty_summary_create_issue_from_project.csv")
+    public void emptySummaryCreateIssueFromProject(String project) {
+        createIssuePage = new CreateIssueFromProject(utilDriver.getDriver(), project );
+        createIssuePage.clickcreateIssue();
+        Assertions.assertTrue(createIssuePage.isError());
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/createIssue/invalid_issuetype_create_issue_from_project.csv")
+    public void invalidIssueCreateIssueFromProject(String project, String issue){
+        createIssuePage = new CreateIssueFromProject(utilDriver.getDriver(), project );
+        createIssuePage.clickcreateIssue();
+        boolean hasError = createIssuePage.isValidIssue(issue);
+        Assertions.assertFalse(hasError);
+    }
+
+
 }

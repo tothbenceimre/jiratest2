@@ -16,7 +16,7 @@ public class CreateIssueFromProject {
     @FindBy(xpath = "//form[@class='iic-widget__form aui']//textarea") WebElement summaryField;
     @FindBy(xpath = "//form[@class='iic-widget__form aui']") WebElement form;
     @FindBy(xpath = "//form[@class='iic-widget__form aui']//button[contains(.,'Cancel')]") WebElement cancelButton;
-    String errorXpath = "//form[@class='iic-widget__form aui']//textarea[@class='iic-error']";
+    String errorXpath = "//form[@class='iic-widget__form aui']//textarea[contains(@class,'iic-error')]";
     String issuePathmiddle = "//a[text()= ";
     String issuePathStart = "//form[@class='iic-widget__form aui']";
     String issuePathEnd = "]";
@@ -33,9 +33,8 @@ public class CreateIssueFromProject {
     public void clickcreateIssue(){ createButton.click(); }
 
     public void createIssue(String issue, String summary){
-        this.issuePathmiddle +="'"+ issue +"'";
         clickcreateIssue();
-        chooseIssue();
+        chooseIssue(issue);
         fillAndSubmitSummary(summary);
     }
 
@@ -54,7 +53,7 @@ public class CreateIssueFromProject {
 
     public boolean isValidIssue(String issue){
         try {
-            driver.findElement(By.xpath(issuePathStart)).click();
+            driver.findElement(By.xpath(setIssueXpath(issue))).click();
             return true;
         } catch (NoSuchElementException e){
             return false;
@@ -66,13 +65,20 @@ public class CreateIssueFromProject {
         summaryField.sendKeys(Keys.ENTER);
     }
 
-    public void submitIssueForm(){
-        form.submit();
+    public boolean isError(){
+        summaryField.sendKeys("");
+        summaryField.sendKeys(Keys.ENTER);
+        return isErrorPresent();
     }
 
-    public void chooseIssue() {
+    public String setIssueXpath(String issue){
+        this.issuePathmiddle +="'"+ issue +"'";
+        return issuePathStart+issuePathmiddle+issuePathEnd;
+    }
+
+    public void chooseIssue(String issue) {
         issueTypeField.click();
-        String xpath = issuePathStart+issuePathmiddle+issuePathEnd;
+        String xpath = setIssueXpath(issue);
         new WebDriverWait(driver,10).until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
         driver.findElement(By.xpath(xpath)).click();
     }
