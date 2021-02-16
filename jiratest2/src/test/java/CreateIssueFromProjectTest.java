@@ -47,6 +47,17 @@ class CreateIssueFromProjectTest {
     }
 
     @ParameterizedTest
+    @CsvFileSource(resources = "/createIssue/create_issue_from_project.csv", numLinesToSkip = 1)
+    public void cancelCreateIssueFromProject(String project, String issue, String summary, String longProjectName){
+        createIssuePage = new CreateIssueFromProject(utilDriver.getDriver(), project );
+        createIssuePage.cancelIssue(issue, summary);
+        page = new CreateIssueForm(utilDriver.getDriver());
+        page.navigateToLastCreatedIssue();
+        boolean created = page.isIssueCreated(longProjectName, issue, summary);
+        Assertions.assertFalse(created);
+    }
+
+    @ParameterizedTest
     @CsvFileSource(resources = "/createIssue/empty_summary_create_issue_from_project.csv")
     public void emptySummaryCreateIssueFromProject(String project) {
         createIssuePage = new CreateIssueFromProject(utilDriver.getDriver(), project );
@@ -62,6 +73,7 @@ class CreateIssueFromProjectTest {
         boolean hasError = createIssuePage.isValidIssue(issue);
         Assertions.assertFalse(hasError);
     }
+
 
 
 }

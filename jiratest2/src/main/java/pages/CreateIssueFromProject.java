@@ -32,6 +32,13 @@ public class CreateIssueFromProject {
 
     public void clickcreateIssue(){ createButton.click(); }
 
+    public void cancelIssue(String issue, String summary){
+        clickcreateIssue();
+        chooseIssue(issue);
+        fillSummary(summary);
+        clickCancel();
+    }
+
     public void createIssue(String issue, String summary){
         clickcreateIssue();
         chooseIssue(issue);
@@ -59,6 +66,9 @@ public class CreateIssueFromProject {
             return false;
         }
     }
+    public void fillSummary(String summary){
+        summaryField.sendKeys(summary);
+    }
 
     public void fillAndSubmitSummary(String summary) {
         summaryField.sendKeys(summary);
@@ -66,8 +76,7 @@ public class CreateIssueFromProject {
     }
 
     public boolean isError(){
-        summaryField.sendKeys("");
-        summaryField.sendKeys(Keys.ENTER);
+        fillAndSubmitSummary("");
         return isErrorPresent();
     }
 
