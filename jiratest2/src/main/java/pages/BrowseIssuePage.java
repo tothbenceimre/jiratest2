@@ -14,6 +14,7 @@ public class BrowseIssuePage {
     @FindBy(id = "project-name-val") WebElement projectNameVal;
     @FindBy(id = "summary-val") WebElement summaryVal;
     @FindBy(id = "key-val") WebElement issueId;
+    @FindBy(id = "edit-issue") WebElement editIssueButton;
 
     public BrowseIssuePage(WebDriver driver) {
         this.driver = driver;
@@ -45,6 +46,13 @@ public class BrowseIssuePage {
 
     public String getId() {
         return issueId.getText();
+    }
+
+    public boolean issueIsEditable () {
+        try {
+            new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(editIssueButton));
+            return true;
+        } catch (TimeoutException e){ return false;}
     }
 
 }
