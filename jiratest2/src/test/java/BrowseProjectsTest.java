@@ -2,8 +2,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import pages.*;
 import util.UtilDriver;
 
@@ -34,17 +32,17 @@ public class BrowseProjectsTest {
 //    }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/browseProjects/searchcertainprojectsfromviewallprojects.csv")
-    public void browseProjectTest_browseFromViewAll_isWorking (String project) {
+    @CsvFileSource(resources = "/browseProjects/search_certain_projects_from_view_all_projects.csv", numLinesToSkip = 1)
+    public void browseProjectTest_browseFromViewAll_isWorking (String project, String key) {
         mainPage.clickOnViewAllProjects();
         viewAllProjectsPage.clickOnSearchedProject(project);
         projectPage.clickOnSummaryPage(project);
 
-        assertTrue(projectPage.verifyProjectIsAvailable(project));
+        assertTrue(projectPage.verifyProjectIsAvailable(key));
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/browseProjects/searchcertainprojects.csv")
+    @CsvFileSource(resources = "/browseProjects/search_certain_projects.csv", numLinesToSkip = 1)
     public void browseProjectTest_certainProject_isAvailable (String project)  {
         utilDriver.navigationToCertainProject(project);
 

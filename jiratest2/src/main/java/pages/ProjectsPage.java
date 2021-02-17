@@ -16,8 +16,8 @@ public class ProjectsPage {
         PageFactory.initElements(this.driver, this);
     }
 
-    public WebElement findProjectsKey (String project) {
-        return driver.findElement(By.xpath("//*[text()='" + project + "']"));
+    public WebElement findProjectsKey (String key) {
+        return driver.findElement(By.xpath("//dd[text()='" + key + "']"));
     }
 
     public WebElement findSummaryPage (String project) {
@@ -30,8 +30,8 @@ public class ProjectsPage {
         findSummaryPage(project).click();
     }
 
-    public boolean verifyProjectIsAvailable (String project) {
-        return findProjectsKey(project).getText().equals(project);
+    public boolean verifyProjectIsAvailable (String key) {
+        return findProjectsKey(key).getText().equals(key);
     }
 
     public boolean verifyProjectIsNotAvailable () {
