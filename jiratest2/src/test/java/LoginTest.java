@@ -1,6 +1,5 @@
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.AfterEach;
 import pages.DashboardPage;
 import org.junit.jupiter.params.ParameterizedTest;
 import pages.LoginPage;
@@ -32,7 +31,7 @@ public class LoginTest {
 //    }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/login/successfullogin.csv")
+    @CsvFileSource(resources = "/login/successful_login.csv")
     public void loginTest_successfulLogInFromDashBoard_isWorking (String username, String password) {
         dashboardPage.login(username, password);
         mainPage.navigateToProfile();
@@ -41,7 +40,7 @@ public class LoginTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/login/successfullogin.csv")
+    @CsvFileSource(resources = "/login/successful_login.csv")
     public void loginTest_successfulLogInFromLoginPage_isWorking (String username, String password) {
         dashboardPage.navigateToLoginPage();
         loginPage.login(username, password);
@@ -51,7 +50,7 @@ public class LoginTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/login/validusernameinvalidpassword.csv")
+    @CsvFileSource(resources = "/login/valid_username_invalid_password.csv")
     public void loginTest_unSuccessfulLogInWithValidUsernameAndInvalidPassword_isWorking (String username, String password) {
         dashboardPage.login(username, password);
 
@@ -59,7 +58,7 @@ public class LoginTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/login/invalidusername.csv")
+    @CsvFileSource(resources = "/login/invalid_username.csv")
     public void loginTest_unSuccessfulLogInWithInvalidUsername_isWorking (String username, String password) {
         dashboardPage.login(username, password);
 
@@ -67,7 +66,7 @@ public class LoginTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/login/emptycredentials.csv")
+    @CsvFileSource(resources = "/login/empty_credentials.csv")
     public void loginTest_unSuccessfulLogInWithEmptyCredentials_isWorking (String username, String password) {
         dashboardPage.login(username, password);
 
