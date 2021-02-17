@@ -29,23 +29,34 @@ public class CreateIssueForm {
         this.driver = driver;
         PageFactory.initElements(this.driver, this);
     }
+
     public void fillProjectField(String projectName){
         new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(projectField));
         projectField.click();
-        projectField.sendKeys(Keys.CONTROL +"a");
-        projectField.sendKeys(Keys.DELETE);
-        projectField.sendKeys(projectName);
-        isNoMatch = isNoMatchPresent();
-        projectField.sendKeys(Keys.TAB);
+        fill(projectField, projectName);
+//        projectField.sendKeys(Keys.CONTROL +"a");
+//        projectField.sendKeys(Keys.DELETE);
+//        projectField.sendKeys(projectName);
+//        isNoMatch = isNoMatchPresent();
+//        projectField.sendKeys(Keys.TAB);
     }
 
     public void fillIssueType(String issue){
         waitForStale(issueTypeInput);
-        issueTypeInput.sendKeys(Keys.CONTROL +"a");
-        issueTypeInput.sendKeys(Keys.DELETE);
-        issueTypeInput.sendKeys(issue);
+        fill(issueTypeInput, issue);
+//        issueTypeInput.sendKeys(Keys.CONTROL +"a");
+//        issueTypeInput.sendKeys(Keys.DELETE);
+//        issueTypeInput.sendKeys(issue);
+//        isNoMatch = isNoMatchPresent();
+//        issueTypeInput.sendKeys(Keys.TAB);
+    }
+
+    public void fill(WebElement webElement, String str){
+        webElement.sendKeys(Keys.CONTROL+"a");
+        webElement.sendKeys(Keys.DELETE);
+        webElement.sendKeys(str);
         isNoMatch = isNoMatchPresent();
-        issueTypeInput.sendKeys(Keys.TAB);
+        webElement.sendKeys(Keys.TAB);
     }
 
     public void waitForStale(WebElement element){
@@ -59,7 +70,7 @@ public class CreateIssueForm {
     public void waitForStaleSummary(WebElement element){
         try {
             new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(element));
-            summaryField.click();
+            element.click();
         } catch (StaleElementReferenceException e){
             new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(element));
         }
@@ -96,33 +107,29 @@ public class CreateIssueForm {
             clickCreate();
         } else {
             clickCancel();
-            acceptPopUp();
+            acceptAlert();
         }
     }
 
     public void navigateToLastCreatedIssue(){
-        acceptPopUp();
+        acceptAlert();
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(issuesButton));
         issuesButton.click();
         waitForStale(recentIssue);
     }
 
-    public void acceptPopUp(){
+    public void acceptAlert(){
         try {
             driver.switchTo().alert().accept();
         } catch (NoAlertPresentException ignored){ }
     }
 
-    public void navigateToCreatedIssue(){
-        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(issueCreatedLink));
-        issueCreatedLink.click();
-    }
 
     public boolean isIssueCreated(String projectName, String issueType, String summary){
         if (!projectName.contains(projectNameVal.getText())){
             return false;
         }
-        if (!issueTypeVal.getText().contains(issueType)){
+        if (!issueTypeVal.getText().contains(issueType)|| !issueType.contains(issueTypeVal.getText())){
             return false;
         }
         if (!summaryVal.getText().equals(summary)){
@@ -139,4 +146,5 @@ public class CreateIssueForm {
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(deleteConfirm));
         deleteConfirm.click();
     }
+
 }

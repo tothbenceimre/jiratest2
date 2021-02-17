@@ -29,6 +29,10 @@ public class MainPage {
         PageFactory.initElements(this.driver, this);
     }
 
+    public void loadpage(){
+        new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(avatar));
+    }
+
     public void clickCreateButton(){
         new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(createButton));
         createButton.click();
@@ -72,5 +76,9 @@ public class MainPage {
         wait.until(ExpectedConditions.visibilityOf(browseButton));
         browseButton.click();
         viewAllProjectsTab.click();
+    }
+
+    public void navigateToIssue(String project, String id) {
+        driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/"+project+"/issues/"+id);
     }
 }

@@ -1,0 +1,14 @@
+project, issue, summary, long project name
+PP, Task, test_issue_for_create_issue_from_project, Private Project 1
+MTP, Task, test_issue_for_create_issue_from_project, Main Testing Project
+MTP, Bug, test_issue_for_create_issue_from_project, Main Testing Project
+MTP, Story, test_issue_for_create_issue_from_project, Main Testing Project
+TOUCAN, Task, test_issue_for_create_issue_from_project, TOUCAN project
+TOUCAN, Bug, test_issue_for_create_issue_from_project, TOUCAN project
+TOUCAN, Story, test_issue_for_create_issue_from_project, TOUCAN project
+COALA, Task, test_issue_for_create_issue_from_project, COALA project
+COALA, Bug, test_issue_for_create_issue_from_project, COALA project
+COALA, Story, test_issue_for_create_issue_from_project, COALA project
+JETI, Task, test_issue_for_create_issue_from_project, JETI project
+JETI, Bug, test_issue_for_create_issue_from_project, JETI project
+JETI, Story, test_issue_for_create_issue_from_project, JETI project
