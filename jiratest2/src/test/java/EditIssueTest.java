@@ -52,17 +52,18 @@ public class EditIssueTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "editIssue/summary_left_empty.csv")
-    public void editIssueTest_summaryLeftEmptyWhileEditing_isNotWorking (String project, String issue, String summary, String longProjectName, String newSummary) {
+    @CsvFileSource(resources = "editIssue/editing_certain_issue.csv", numLinesToSkip = 1)
+    public void editIssueTest_cancellationOfEdit_isWorking (String project, String issue, String summary, String longProjectName, String newSummary) {
         createIssuePage = new CreateIssueFromProject(utilDriver.getDriver(), project );
         createIssuePage.createIssue(issue, summary);
         page = new CreateIssueForm(utilDriver.getDriver());
         page.navigateToLastCreatedIssue();
         browseIssuePage.clickOnEditIssue();
         editIssueForm.editSummaryField(newSummary);
+        editIssueForm.clickOnCancelButton();
         boolean edited = page.isIssueCreated(longProjectName, issue, newSummary);
         page.deleteCreatedIssue();
 
-        Assertions.assertTrue(edited);
+        Assertions.assertFalse(edited);
     }
 }
