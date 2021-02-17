@@ -66,4 +66,20 @@ public class EditIssueTest {
 
         Assertions.assertFalse(edited);
     }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "editIssue/summary_left_empty.csv", numLinesToSkip = 1)
+    public void editIssueTest_summaryLeftEmptyWhileEditing_isNotWorking (String project, String issue, String summary, String longProjectName, String newSummary) {
+        createIssuePage = new CreateIssueFromProject(utilDriver.getDriver(), project );
+        createIssuePage.createIssue(issue, summary);
+        page = new CreateIssueForm(utilDriver.getDriver());
+        page.navigateToLastCreatedIssue();
+        browseIssuePage.clickOnEditIssue();
+        editIssueForm.editSummaryField(newSummary);
+        boolean messageIsDisplayed = editIssueForm.isErrorMessageDisplayed();
+        editIssueForm.clickOnCancelButton();
+        page.deleteCreatedIssue();
+
+        Assertions.assertTrue(messageIsDisplayed);
+    }
 }

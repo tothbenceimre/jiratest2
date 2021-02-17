@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,6 +13,7 @@ public class EditIssueForm {
     @FindBy(id = "summary") WebElement summaryField;
     @FindBy(id = "edit-issue-submit") WebElement updateButton;
     @FindBy(xpath = "//*[@id='edit-issue-dialog']/footer/div/div/button") WebElement cancelButton;
+    @FindBy(xpath = "//*[@id='summary']/following-sibling::div") WebElement errorMessage;
 
 
     public EditIssueForm(WebDriver driver) {
@@ -41,5 +43,12 @@ public class EditIssueForm {
     public void clickOnCancelButton () {
         cancelButton.click();
         acceptAlert();
+    }
+
+    public boolean isErrorMessageDisplayed () {
+        try {
+            new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(errorMessage));
+            return true;
+        } catch (TimeoutException e){ return false;}
     }
 }
