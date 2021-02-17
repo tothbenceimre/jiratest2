@@ -6,10 +6,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 public class GlassComponentPage {
     WebDriver driver;
     @FindBy(id = "glass-general-components-panel") WebElement componentsContainer;
-    @FindBy(xpath = "//table[@id ='components-table']/tbody/tr") WebElement componentNum;
+	@FindBy(css="")
+	private WebElement webElement;
+    @FindBy(xpath = "//table[@id ='components-table']/tbody/tr")
+    List<WebElement> rowsInTable;
     @FindBy(id = "no-components-container") WebElement noComponentsContainer;
     WebElement componentRow;
 
@@ -19,13 +24,21 @@ public class GlassComponentPage {
         PageFactory.initElements(this.driver, this);
     }
 
+    public boolean hasNoComponentsContainer() {
+        return noComponentsContainer.isDisplayed();
+    }
+
+    public int getRowNum(){
+        return rowsInTable.size();
+    }
+
     public GlassComponentPage(WebDriver driver, String id) {
         this.driver = driver;
         this.componentRow = driver.findElement(By.xpath("//tr[@data-component-id='" + id +"']"));
     }
 
-    public WebElement getComponentRow(){
-        return componentRow;
+    public boolean hasComponentRow(){
+        return componentRow.isDisplayed();
     }
 
     public String getComponentName(WebElement element){
