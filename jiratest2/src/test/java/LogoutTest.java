@@ -28,7 +28,7 @@ public class LogoutTest {
 //    }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/login/successful_login.csv")
+    @CsvFileSource(resources = "/login/successful_login.csv", numLinesToSkip = 1)
     public void logoutTest_successfulLogOut_isWorking (String username, String password) {
         dashboardPage.login(username, password);
         mainPage.clickOnLogout();
