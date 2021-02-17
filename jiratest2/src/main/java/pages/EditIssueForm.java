@@ -11,6 +11,7 @@ public class EditIssueForm {
     WebDriver driver;
     @FindBy(id = "summary") WebElement summaryField;
     @FindBy(id = "edit-issue-submit") WebElement updateButton;
+    @FindBy(xpath = "//*[@id='edit-issue-dialog']/footer/div/div/button") WebElement cancelButton;
 
 
     public EditIssueForm(WebDriver driver) {
@@ -31,5 +32,14 @@ public class EditIssueForm {
 
     public void clickOnUpdateButton() {
         updateButton.click();
+    }
+
+    public void acceptAlert () {
+        driver.switchTo().alert().accept();
+    }
+
+    public void clickOnCancelButton () {
+        cancelButton.click();
+        acceptAlert();
     }
 }
