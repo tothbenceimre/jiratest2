@@ -1,9 +1,6 @@
 package pages;
 
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -48,12 +45,20 @@ public class ComponentPage {
     }
 
     public void clickAddButton(){
+//        new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(addButton));
+        new WebDriverWait(driver,10).until(ExpectedConditions.elementToBeClickable(addButton));
         addButton.click();
     }
 
     public String getId(){
 //        waitForStale(tr);
         return tr.getAttribute("data-component-id");
+    }
+
+    public void delete(String componentId){
+        tr.findElement(By.xpath("//td[7]//a")).click();
+        driver.findElement(By.id("deletecomponent_"+componentId)).click();
+        driver.findElement(By.id("submit")).click();
     }
 
     public void refresh(){

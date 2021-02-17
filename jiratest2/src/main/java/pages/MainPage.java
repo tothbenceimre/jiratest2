@@ -81,4 +81,12 @@ public class MainPage {
     public void navigateToIssue(String project, String id) {
         driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/"+project+"/issues/"+id);
     }
+
+    public void navigateToGlass(String project){
+        driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/"+project+"?selectedItem=com.codecanvas.glass:glass");
+    }
+
+    public void navigateToComponents(String project){
+        driver.navigate().to("https://jira-auto.codecool.metastage.net/projects/"+project+"?selectedItem=com.atlassian.jira.jira-projects-plugin:components-page");
+    }
 }
