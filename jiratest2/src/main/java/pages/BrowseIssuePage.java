@@ -55,4 +55,7 @@ public class BrowseIssuePage {
         } catch (TimeoutException e){ return false;}
     }
 
+    public void clickOnEditIssue () {
+        editIssueButton.click();
+    }
 }
