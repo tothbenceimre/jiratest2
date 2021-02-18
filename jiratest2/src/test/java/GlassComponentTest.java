@@ -120,13 +120,13 @@ public class GlassComponentTest {
         String id = addComp(project, name, lead, description, assignee);
         mainPage.navigateToGlass(project);
         componentTable = new GlassComponentPage(utilDriver.getDriver(), id);
-        String oldIssueNum = componentTable.getIssueNum(componentTable.getComponentRow());
+        String oldIssueNum = componentTable.getIssueNum();
         mainPage.navigateToIssue(project, "75");
         createIssueFromProject = new CreateIssueFromProject(utilDriver.getDriver(), project);
         createIssueFromProject.addComponent(name);
         mainPage.navigateToGlass(project);
         componentTable = new GlassComponentPage(utilDriver.getDriver(), id);
-        String newIssueNum = componentTable.getIssueNum(componentTable.getComponentRow());
+        String newIssueNum = componentTable.getIssueNum();
         mainPage.navigateToComponents(project);
         componentPage.delete(id);
 
