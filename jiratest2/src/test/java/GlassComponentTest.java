@@ -68,13 +68,10 @@ public class GlassComponentTest {
     @ParameterizedTest
     @CsvFileSource(resources = "/glasscomponent/glass_component.csv", numLinesToSkip = 1)
     public void hasComponentInTableBefore(String project, String name, String lead, String description, String assignee){
-        String beforeId = addComp(project, name, assignee);
+        String beforeId = addComp(project, "before"+name, lead, description, assignee);
         mainPage.navigateToGlass(project);
         int before = componentTable.getRowNum();
-        mainPage.navigateToComponents(project);
-        componentPage.fillAll(name, lead, description, assignee);
-        componentPage.clickAddButton();
-        String id = componentPage.getId();
+        String id = addComp(project, name, lead, description, assignee);
         mainPage.navigateToGlass(project);
         int after = componentTable.getRowNum();
         mainPage.navigateToComponents(project);
@@ -83,9 +80,23 @@ public class GlassComponentTest {
         Assertions.assertEquals(before+1, after);
     }
 
-    private String addComp(String project, String name, String assignee ){
+    @ParameterizedTest
+    @CsvFileSource(resources = "/glasscomponent/glass_component_all.csv", numLinesToSkip = 1)
+    public void allComponentCorrectInTable(String project, String name, String lead, String description, String assignee){
+        String id = addComp(project, name, lead, description, assignee);
+        mainPage.navigateToGlass(project);
+        componentTable = new GlassComponentPage(utilDriver.getDriver(), id);
+        boolean isAll = componentTable.allCorrect(name, lead, description, assignee, "0");
         mainPage.navigateToComponents(project);
-        componentPage.fillMustHave("before"+name, assignee);
+        componentPage.delete(id);
+        Assertions.assertTrue(isAll);
+    }
+
+
+
+    private String addComp(String project, String name,String lead, String description, String assignee ){
+        mainPage.navigateToComponents(project);
+        componentPage.fillAll(name, lead, description, assignee);
         componentPage.clickAddButton();
         return componentPage.getId();
     }
