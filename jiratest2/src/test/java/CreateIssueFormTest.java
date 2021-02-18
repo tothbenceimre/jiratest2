@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import pages.CreateIssueForm;
 import pages.DashboardPage;
 import pages.MainPage;
 import util.UtilDriver;
@@ -11,6 +12,7 @@ class CreateIssueFormTest {
     UtilDriver utilDriver;
     DashboardPage dashboardPage;
     MainPage mainPage;
+    CreateIssueForm form;
 
     @BeforeEach
     public void setUp(){
@@ -18,6 +20,7 @@ class CreateIssueFormTest {
         dashboardPage = new DashboardPage(utilDriver.getDriver());
         dashboardPage.login(System.getenv("jirausername"), System.getenv("jirapassword"));
         mainPage = new MainPage(utilDriver.getDriver());
+        form = new CreateIssueForm(utilDriver.getDriver());
         mainPage.clickCreateButton();
     }
 
@@ -47,8 +50,15 @@ class CreateIssueFormTest {
     @CsvFileSource(resources = "/createIssue/invalid_in_issue_form.csv", numLinesToSkip = 1)
     public void invalidDataInIssueForm(String project, String issue, String summary, boolean isCreate){
         mainPage.fillCreateIssueForm(project, issue, summary, isCreate);
+        boolean isIncorrect = form.isNoMatchPresent();
+        Assertions.assertTrue(isIncorrect);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/createIssue/empty_summary_in_issue_form.csv", numLinesToSkip = 1)
+    public void emptySummaryIssueForm(String project, String issue, String summary, boolean isCreate){
+        mainPage.fillCreateIssueForm(project, issue, summary, isCreate);
         boolean isCorrect = mainPage.isIssueCreatedCorrectly(project, issue, summary);
         Assertions.assertFalse(isCorrect);
     }
-
 }
