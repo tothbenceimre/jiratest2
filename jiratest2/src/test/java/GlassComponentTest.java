@@ -13,6 +13,9 @@ public class GlassComponentTest {
     ComponentPage componentPage;
     GlassComponentDocumentationBoxPage componentBox;
     GlassComponentPage componentTable;
+    CreateIssueFromProject createIssueFromProject;
+    CreateIssueForm createIssueForm;
+
 
     @BeforeEach
     public void setUp(){
@@ -109,6 +112,25 @@ public class GlassComponentTest {
         mainPage.navigateToComponents(project);
         componentPage.delete(id);
         Assertions.assertNotEquals(oldName, newName);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/glasscomponent/glass_component_all.csv", numLinesToSkip = 1)
+    public void addIssueToComponentCorrectInTable(String project, String name, String lead, String description, String assignee){
+        String id = addComp(project, name, lead, description, assignee);
+        mainPage.navigateToGlass(project);
+        componentTable = new GlassComponentPage(utilDriver.getDriver(), id);
+        String oldIssueNum = componentTable.getIssueNum(componentTable.getComponentRow());
+        mainPage.navigateToIssue(project, "75");
+        createIssueFromProject = new CreateIssueFromProject(utilDriver.getDriver(), project);
+        createIssueFromProject.addComponent(name);
+        mainPage.navigateToGlass(project);
+        componentTable = new GlassComponentPage(utilDriver.getDriver(), id);
+        String newIssueNum = componentTable.getIssueNum(componentTable.getComponentRow());
+        mainPage.navigateToComponents(project);
+        componentPage.delete(id);
+
+        Assertions.assertEquals(Integer.parseInt(oldIssueNum)+1, Integer.parseInt(newIssueNum));
     }
 
     private String addComp(String project, String name,String lead, String description, String assignee ){
