@@ -58,7 +58,7 @@ class CreateIssueFormTest {
     @CsvFileSource(resources = "/createIssue/empty_summary_in_issue_form.csv", numLinesToSkip = 1)
     public void emptySummaryIssueForm(String project, String issue, String summary, boolean isCreate){
         mainPage.fillCreateIssueForm(project, issue, summary, isCreate);
-        boolean isCorrect = mainPage.isIssueCreatedCorrectly(project, issue, summary);
-        Assertions.assertFalse(isCorrect);
+        boolean isInCorrect = form.isErrorPresent();
+        Assertions.assertTrue(isInCorrect);
     }
 }
