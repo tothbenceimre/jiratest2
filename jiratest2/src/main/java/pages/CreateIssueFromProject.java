@@ -20,6 +20,8 @@ public class CreateIssueFromProject {
     String issuePathmiddle = "//a[text()= ";
     String issuePathStart = "//form[@class='iic-widget__form aui']";
     String issuePathEnd = "]";
+    @FindBy(id = "components-val") WebElement component;
+    @FindBy(id = "components-textarea") WebElement componentInput;
 
 
     public CreateIssueFromProject(WebDriver driver, String projectUrl) {
@@ -88,4 +90,21 @@ public class CreateIssueFromProject {
         driver.findElement(By.xpath(xpath)).click();
     }
 
+    public void addComponent(String name){
+        component.click();
+        new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(componentInput));
+        componentInput.sendKeys(name);
+        componentInput.sendKeys(Keys.TAB);
+        componentInput.sendKeys(Keys.ALT+"s");
+    }
+
+
+    public void deleteComponent() {
+        component.click();
+        new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(componentInput));
+        componentInput.sendKeys(Keys.BACK_SPACE);
+        componentInput.sendKeys(Keys.BACK_SPACE);
+        componentInput.sendKeys(Keys.TAB);
+        componentInput.sendKeys(Keys.ALT+"s");
+    }
 }
