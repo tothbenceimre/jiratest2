@@ -34,21 +34,11 @@ public class CreateIssueForm {
         new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(projectField));
         projectField.click();
         fill(projectField, projectName);
-//        projectField.sendKeys(Keys.CONTROL +"a");
-//        projectField.sendKeys(Keys.DELETE);
-//        projectField.sendKeys(projectName);
-//        isNoMatch = isNoMatchPresent();
-//        projectField.sendKeys(Keys.TAB);
     }
 
     public void fillIssueType(String issue){
         waitForStale(issueTypeInput);
         fill(issueTypeInput, issue);
-//        issueTypeInput.sendKeys(Keys.CONTROL +"a");
-//        issueTypeInput.sendKeys(Keys.DELETE);
-//        issueTypeInput.sendKeys(issue);
-//        isNoMatch = isNoMatchPresent();
-//        issueTypeInput.sendKeys(Keys.TAB);
     }
 
     public void fill(WebElement webElement, String str){
@@ -78,8 +68,7 @@ public class CreateIssueForm {
 
     public void fillSummary(String summary){
         waitForStaleSummary(summaryField);
-        if (summary != null){
-        summaryField.sendKeys(summary);}
+        summaryField.sendKeys(summary);
     }
 
     public boolean isErrorPresent(){
