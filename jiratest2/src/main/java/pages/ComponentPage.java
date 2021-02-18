@@ -4,19 +4,18 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.concurrent.TimeUnit;
 
 public class ComponentPage {
     WebDriver driver;
     @FindBy(xpath = "//form[@id='components-add__component']//input[@name= 'name']") WebElement componentName;
     @FindBy(xpath = "//*[@id='leadUserName-single-select']/input") WebElement lead;
+    @FindBy(xpath = "//select[@name='leadUserName']") WebElement leadSelect;
     @FindBy(xpath = "//input[@name='description']") WebElement description;
     @FindBy(xpath = "//*[@id='assigneeType-single-select']/input") WebElement assignee;
     @FindBy(xpath = "//form[@id='components-add__component']//button") WebElement addButton;
-    @FindBy(xpath = "//*[@id='content-container']") WebElement container;
     @FindBy(xpath = "//*[@id='components-table']/tbody[@class='items']/tr") WebElement tr;
     @FindBy(id = "component-name") WebElement newNameInput;
 
@@ -49,7 +48,13 @@ public class ComponentPage {
     }
 
     public void fillLead(String leadName){
-        fill(lead, leadName);
+        try {
+            lead.sendKeys(leadName);
+            Select select = new Select(leadSelect);
+            select.selectByVisibleText(leadName);
+        } catch (NoSuchElementException e){
+            lead.sendKeys(Keys.TAB);
+        }
     }
 
     public void fillDescription(String desc){
@@ -67,6 +72,7 @@ public class ComponentPage {
 
     public String getId(){
         waitForStale(tr);
+        new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(tr));
         return tr.getAttribute("data-component-id");
     }
 
@@ -89,8 +95,8 @@ public class ComponentPage {
 
     public void waitForStale(WebElement element){
         try {
+            driver.navigate().refresh();
             new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(element));
-            element.click();
         } catch (StaleElementReferenceException e){
             new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(element));
         }
