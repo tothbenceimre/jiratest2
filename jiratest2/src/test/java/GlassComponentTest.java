@@ -93,6 +93,23 @@ public class GlassComponentTest {
     }
 
 
+    @ParameterizedTest
+    @CsvFileSource(resources = "/glasscomponent/glass_component_all.csv", numLinesToSkip = 1)
+    public void editComponentCorrectInTable(String project, String name, String lead, String description, String assignee){
+        String id = addComp(project, name, lead, description, assignee);
+        mainPage.navigateToGlass(project);
+        componentTable = new GlassComponentPage(utilDriver.getDriver(), id);
+        String oldName = componentTable.getComponentName(componentTable.getComponentRow());
+        mainPage.navigateToComponents(project);
+        componentPage.edit(id);
+        mainPage.navigateToGlass(project);
+        mainPage.acceptAlert();
+        componentTable = new GlassComponentPage(utilDriver.getDriver(), id);
+        String newName = componentTable.getComponentName(componentTable.getComponentRow());
+        mainPage.navigateToComponents(project);
+        componentPage.delete(id);
+        Assertions.assertNotEquals(oldName, newName);
+    }
 
     private String addComp(String project, String name,String lead, String description, String assignee ){
         mainPage.navigateToComponents(project);

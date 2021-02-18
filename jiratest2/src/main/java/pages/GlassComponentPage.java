@@ -67,9 +67,15 @@ public class GlassComponentPage {
         return componentRow.findElement(By.xpath("//td[4]")).getText();
     }
 
+    public WebElement getComponentRow() {
+        return componentRow;
+    }
+
     public String getDescription(WebElement element){
 //        return componentRow.findElement(By.xpath("//*[@class='glass-components-table__description']/div")).getText();
         return componentRow.findElement(By.xpath("//td[5]//div")).getText();
+
+
 
     }
 

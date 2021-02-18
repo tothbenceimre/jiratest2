@@ -4,7 +4,10 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 public class ComponentPage {
     WebDriver driver;
@@ -15,7 +18,7 @@ public class ComponentPage {
     @FindBy(xpath = "//form[@id='components-add__component']//button") WebElement addButton;
     @FindBy(xpath = "//*[@id='content-container']") WebElement container;
     @FindBy(xpath = "//*[@id='components-table']/tbody[@class='items']/tr") WebElement tr;
-    WebElement trById;
+    @FindBy(id = "component-name") WebElement newNameInput;
 
     public ComponentPage(WebDriver driver) {
         this.driver = driver;
@@ -74,13 +77,22 @@ public class ComponentPage {
         driver.findElement(By.id("deletecomponent_"+componentId)).click();
         driver.findElement(By.id("submit")).click();
     }
+    public void edit(String componentId){
+        driver.navigate().refresh();
+        WebElement elem = driver.findElement(By.xpath("//tr[@data-component-id='"+componentId+"']"));
+        elem.findElement(By.xpath("//td[7]//a")).click();
+        driver.findElement(By.id("editcomponent_"+componentId)).click();
+        new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(newNameInput));
+        newNameInput.sendKeys("new_name");
+        driver.findElement(By.id("component-save-submit")).click();
+    }
 
     public void waitForStale(WebElement element){
         try {
-            new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(element));
+            new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(element));
             element.click();
         } catch (StaleElementReferenceException e){
-            new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOf(element));
+            new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(element));
         }
     }
 }
