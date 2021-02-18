@@ -19,7 +19,6 @@ public class GlassComponentDocumentationBoxPage {
 
     public String getComponentCount() {
         new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(componentCount));
-        System.out.println(componentCount.getText());
         return componentCount.getText();
     }
 }
