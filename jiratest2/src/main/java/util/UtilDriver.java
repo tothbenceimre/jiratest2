@@ -44,4 +44,20 @@ public class UtilDriver {
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         }
 
+        public void navigationToCertainProjectGlassProject (String key) {
+            driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+            WebDriverWait wait = new WebDriverWait(driver, 10000);
+            wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//*[@id='header-details-user-fullname']/span/span/img"))));
+            driver.get("https://jira-auto.codecool.metastage.net/projects/" + key + "?selectedItem=com.codecanvas.glass:glass");
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        }
+
+    public void navigationToCertainProjectReleasePage (String key) {
+        driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+        WebDriverWait wait = new WebDriverWait(driver, 10000);
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//*[@id='header-details-user-fullname']/span/span/img"))));
+        driver.get("https://jira-auto.codecool.metastage.net/projects/" + key + "?selectedItem=com.atlassian.jira.jira-projects-plugin%3Arelease-page&status=no-filter");
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    }
+
 }
