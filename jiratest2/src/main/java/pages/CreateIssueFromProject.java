@@ -30,17 +30,17 @@ public class CreateIssueFromProject {
 
     public void clickCancel(){cancelButton.click();}
 
-    public void clickcreateIssue(){ createButton.click(); }
+    public void clickCreateIssue(){ createButton.click(); }
 
     public void cancelIssue(String issue, String summary){
-        clickcreateIssue();
+        clickCreateIssue();
         chooseIssue(issue);
         fillSummary(summary);
         clickCancel();
     }
 
     public void createIssue(String issue, String summary){
-        clickcreateIssue();
+        clickCreateIssue();
         chooseIssue(issue);
         fillAndSubmitSummary(summary);
     }
