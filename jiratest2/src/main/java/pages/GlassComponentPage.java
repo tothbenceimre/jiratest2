@@ -35,48 +35,38 @@ public class GlassComponentPage {
         this.componentRow = driver.findElement(By.xpath("//tr[@data-component-id='" + id +"']"));
     }
 
-    public boolean allCorrect(String name, String lead, String desc, String assignee, String issuenum){
-        return getComponentName(componentRow).equals(name) && getIssueNum(componentRow).equals(issuenum) &&
-                lead.contains(getLead(componentRow)) && desc.contains(getDescription(componentRow)) &&
-                getAssignee(componentRow).contains(assignee);
+    public boolean allCorrect(String name, String lead, String desc, String assignee, String issueNum){
+        return getComponentName().equals(name) && getIssueNum().equals(issueNum) &&
+                lead.contains(getLead()) && desc.contains(getDescription()) &&
+                getAssignee().toLowerCase().contains(assignee.toLowerCase());
     }
 
     public boolean hasComponentRow(){
         return componentRow.isDisplayed();
     }
 
-    public String getComponentName(WebElement element){
+    public String getComponentName(){
 //        return componentRow.findElement(By.xpath("//*[@class='components-table__name']//a")).getText();
         return componentRow.findElement(By.xpath("//td[1]//a")).getText();
     }
 
-    public String getIssueNum(WebElement element){
+    public String getIssueNum(){
         return componentRow.findElement(By.xpath("//td[@class='components-table__issues-count']//a")).getText();
-//        return componentRow.findElement(By.xpath("//td[2]//a")).getText();
-
     }
 
-    public String getLead(WebElement element){
+    public String getLead(){
 //        return componentRow.findElement(By.xpath("//*[@class='components-table__lead']//a")).getText();
         return componentRow.findElement(By.xpath("//td[3]")).getText();
-
     }
 
-    public String getAssignee(WebElement element){
+    public String getAssignee(){
 //        return componentRow.findElement(By.xpath("//*[@class='components-table__assignee']")).getText();
         return componentRow.findElement(By.xpath("//td[4]")).getText();
     }
 
-    public WebElement getComponentRow() {
-        return componentRow;
-    }
-
-    public String getDescription(WebElement element){
+    public String getDescription(){
 //        return componentRow.findElement(By.xpath("//*[@class='glass-components-table__description']/div")).getText();
         return componentRow.findElement(By.xpath("//td[5]//div")).getText();
-
-
-
     }
 
 }

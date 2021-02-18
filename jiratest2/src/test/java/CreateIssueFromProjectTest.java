@@ -57,7 +57,7 @@ class CreateIssueFromProjectTest {
     @CsvFileSource(resources = "/createIssue/empty_summary_create_issue_from_project.csv")
     public void emptySummaryCreateIssueFromProject(String project) {
         createIssuePage = new CreateIssueFromProject(utilDriver.getDriver(), project );
-        createIssuePage.clickcreateIssue();
+        createIssuePage.clickCreateIssue();
         Assertions.assertTrue(createIssuePage.isError());
     }
 
@@ -65,7 +65,7 @@ class CreateIssueFromProjectTest {
     @CsvFileSource(resources = "/createIssue/invalid_issuetype_create_issue_from_project.csv")
     public void invalidIssueCreateIssueFromProject(String project, String issue){
         createIssuePage = new CreateIssueFromProject(utilDriver.getDriver(), project );
-        createIssuePage.clickcreateIssue();
+        createIssuePage.clickCreateIssue();
         boolean hasError = createIssuePage.isValidIssue(issue);
         Assertions.assertFalse(hasError);
     }
