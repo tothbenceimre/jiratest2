@@ -99,13 +99,13 @@ public class GlassComponentTest {
         String id = addComp(project, name, lead, description, assignee);
         mainPage.navigateToGlass(project);
         componentTable = new GlassComponentPage(utilDriver.getDriver(), id);
-        String oldName = componentTable.getComponentName(componentTable.getComponentRow());
+        String oldName = componentTable.getComponentName();
         mainPage.navigateToComponents(project);
         componentPage.edit(id);
         mainPage.navigateToGlass(project);
         mainPage.acceptAlert();
         componentTable = new GlassComponentPage(utilDriver.getDriver(), id);
-        String newName = componentTable.getComponentName(componentTable.getComponentRow());
+        String newName = componentTable.getComponentName();
         mainPage.navigateToComponents(project);
         componentPage.delete(id);
         Assertions.assertNotEquals(oldName, newName);
