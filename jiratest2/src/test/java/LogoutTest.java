@@ -1,7 +1,5 @@
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.AfterEach;
 import pages.DashboardPage;
 import org.junit.jupiter.params.ParameterizedTest;
 import pages.LogoutPage;
@@ -30,7 +28,7 @@ public class LogoutTest {
 //    }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/login/successfullogin.csv")
+    @CsvFileSource(resources = "/login/successful_login.csv", numLinesToSkip = 1)
     public void logoutTest_successfulLogOut_isWorking (String username, String password) {
         dashboardPage.login(username, password);
         mainPage.clickOnLogout();
